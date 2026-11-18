@@ -1,0 +1,37 @@
+27 conditions x 10 replicates; one BLAS thread
+Convergence warnings: 0
+Other warnings emitted to caller: 0
+Maximum solver iterations: 26
+         416648 function calls (415552 primitive calls) in 3.461 seconds
+
+   Ordered by: cumulative time
+   List reduced from 197 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      270    0.064    0.000    3.462    0.013 simulation.py:26(trial)
+      270    0.922    0.003    1.719    0.006 dgps.py:19(generate)
+      270    0.003    0.000    1.648    0.006 methods.py:13(fit_lasso)
+      270    0.051    0.000    1.639    0.006 base.py:1372(wrapper)
+      270    0.007    0.000    1.499    0.006 _coordinate_descent.py:927(fit)
+      270    0.002    0.000    0.906    0.003 _param_validation.py:185(wrapper)
+      270    0.819    0.003    0.904    0.003 _coordinate_descent.py:377(enet_path)
+      540    0.784    0.001    0.784    0.001 {built-in method numpy.asfortranarray}
+     1350    0.020    0.000    0.518    0.000 validation.py:736(check_array)
+      270    0.001    0.000    0.355    0.001 _base.py:755(_pre_fit)
+      270    0.003    0.000    0.353    0.001 _base.py:107(_preprocess_data)
+     4050    0.289    0.000    0.289    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+     1350    0.017    0.000    0.254    0.000 validation.py:90(_assert_all_finite)
+     2970    0.008    0.000    0.216    0.000 fromnumeric.py:69(_wrapreduction)
+     2160    0.004    0.000    0.211    0.000 fromnumeric.py:2338(sum)
+     1890    0.004    0.000    0.194    0.000 _array_api.py:811(_asarray_with_order)
+      270    0.002    0.000    0.190    0.001 validation.py:2835(validate_data)
+      540    0.177    0.000    0.177    0.000 {built-in method numpy.array}
+      270    0.001    0.000    0.170    0.001 validation.py:1203(check_X_y)
+      270    0.000    0.000    0.083    0.000 _methods.py:50(_sum)
+      270    0.001    0.000    0.081    0.000 base.py:428(_validate_params)
+      270    0.004    0.000    0.041    0.000 _param_validation.py:28(validate_parameter_constraints)
+      270    0.002    0.000    0.039    0.000 base.py:231(get_params)
+      270    0.003    0.000    0.037    0.000 base.py:200(_get_param_names)
+     6210    0.004    0.000    0.031    0.000 {built-in method builtins.any}
+
+

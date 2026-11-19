@@ -18,9 +18,9 @@ VERSIONS = {
 }
 
 
-def run(config, output, version):
+def run(config, output, **options):
     with redirect_stdout(StringIO()):
-        simulate(config, output, **VERSIONS[version])
+        simulate(config, output, **options)
     seconds = json.loads((output / "run.json").read_text())["simulation_seconds"]
     with (output / "raw" / "replicates.csv").open(newline="") as handle:
         return seconds, list(csv.DictReader(handle))
@@ -34,7 +34,7 @@ def compare(reference, actual):
     for index, (expected, row) in enumerate(zip(reference, actual), 1):
         exact_rows += expected == row
         for field, value in expected.items():
-            if field == "dual_gap":
+            if field in ("dual_gap", "max_dual_gap"):
                 before, after = float(value), float(row[field])
                 max_gap_difference = max(max_gap_difference, abs(before - after))
                 if isclose(before, after, rel_tol=1e-8, abs_tol=1e-12):
@@ -55,10 +55,10 @@ def main():
         output = Path(directory)
         warmup = dict(config, theta=[1.2], replicates=2)
         for version in versions:
-            run(warmup, output, version)
+            run(warmup, output, **VERSIONS[version])
         for offset in range(len(versions)):
             for version in versions[offset:] + versions[:offset]:
-                seconds, rows = run(config, output, version)
+                seconds, rows = run(config, output, **VERSIONS[version])
                 if reference is None:
                     reference = rows
                 exact_rows, gap_difference = compare(reference, rows)

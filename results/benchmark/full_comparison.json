@@ -1,0 +1,17 @@
+{
+  "same_config": true,
+  "unit2_seconds": 418.5566448000027,
+  "unit3_seconds": 183.5949063000735,
+  "workers": 4,
+  "recorded_speedup": 2.2797835366733983,
+  "replicates": {
+    "compared": 37800,
+    "exact_rows": 32881,
+    "max_abs_dual_gap_difference": 3.870190230109783e-15
+  },
+  "conditions": {
+    "compared": 189,
+    "exact_rows": 161,
+    "max_abs_dual_gap_difference": 2.065273226438241e-15
+  }
+}

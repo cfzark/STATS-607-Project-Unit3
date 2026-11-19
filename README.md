@@ -2,31 +2,43 @@
 
 A simulation study of exact signed support recovery using Lasso, following Figures 1 and 2 of Wainwright (2009). [ADEMP.md](ADEMP.md) describes the design; [ANALYSIS.md](ANALYSIS.md) discusses the results.
 
-## Setup
+## Reproduce from a fresh clone
 
-Use Python 3.11 or later. From the repository root:
+Install Python 3.11 with `venv` support and GNU Make. Run this command from the repository root.
 
 ```sh
-python -m venv .venv
-# Activate: .venv\Scripts\Activate.ps1 (PowerShell)
-#           source .venv/bin/activate (macOS/Linux)
-python -m pip install -r requirements.txt
+make reproduce
 ```
 
-## Run
+The command creates or reuses `.venv`, installs the versions listed in `requirements.txt`, and uses that environment directly. It runs the full simulation with four workers, generates the summary and simulation figures, then runs the tests and stability check. The outputs, including `stability.json`, are written under `results/`.
+
+The first run requires internet access to download dependencies. In a clean Windows environment, the 37,800 fits took about three minutes, plus time for setup and checks. Use `make reproduce WORKERS=2` to run with two workers.
+
+## Run individual stages
+
+These targets use the Python on your PATH. To use the project environment directly, pass `PYTHON=.venv/Scripts/python.exe` on Windows or `PYTHON=.venv/bin/python` on macOS or Linux.
 
 ```sh
 make test
 make all       # 189 conditions, 200 replicates each
+make parallel WORKERS=4
+make profile complexity    # Profile the baseline and time trials as n changes
+make benchmark             # Run the serial and parallel timing comparisons
+make stability-check       # Check the saved replicate results
+make performance           # Plot the recorded full-run comparison and benchmark
 ```
 
 Run individual stages with `make simulate`, `make analyze`, and `make figures`. Analysis reads the saved raw results, and plotting reads the summary table. `make clean` removes the generated results.
 
-Without Make:
+In a fresh clone, run `make parallel` to generate the raw results before running `make stability-check`. The check validates trial coverage, numerical values, and convergence. Pass `LOG=path/to/run.log` to also scan a captured UTF-8 run log for warnings and errors.
+
+If the dependencies are already installed, these commands work without Make.
 
 ```sh
 python -m unittest discover -s tests -v
 python -m src.simulation all
+python -m src.simulation all --workers 4
+python -m scripts.benchmark_parallel
 ```
 
 ## Structure
@@ -57,11 +69,14 @@ Settings are centralized in `config.json`. Each condition and replicate has a re
 
 ## Results
 
-The full run completed 37,800 fits in about seven minutes with no convergence warnings. Recovery increases with sample size, and rescaling brings the dimension-specific curves closer together. This reproduces the qualitative pattern; the finite-sample probabilities differ from those in the paper.
+The full four-worker run completed 37,800 fits in about three minutes, compared with about seven minutes for Unit 2. Recovery results match Unit 2, with no convergence warnings. Recovery increases with sample size, and rescaling brings the dimension-specific curves closer together. This reproduces the qualitative pattern; the finite-sample probabilities differ from those in the paper.
+
+Performance measurements are in [BASELINE.md](docs/BASELINE.md) and [OPTIMIZATION.md](docs/OPTIMIZATION.md).
 
 - [Sample-size rescaling](results/figures/figure1_rescaling.png)
 - [Signed support recovery](results/figures/figure2_recovery.png)
 - [Convergence diagnostic](results/figures/diagnostic_convergence.png)
+- [Performance comparison](results/figures/performance.png)
 
 ## Reference
 

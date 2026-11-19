@@ -17,6 +17,9 @@ def fit_lasso(x, y, alpha, tol=1e-8, max_iter=10000, *, copy_X=True):
         warnings.simplefilter("always", ConvergenceWarning)
         model.fit(x, y)
     warned = any(issubclass(w.category, ConvergenceWarning) for w in caught)
+    for warning in caught:
+        if not issubclass(warning.category, ConvergenceWarning):
+            warnings.warn_explicit(warning.message, warning.category, warning.filename, warning.lineno)
     return model.coef_, {
         "convergence_warning": int(warned),
         "iterations": int(model.n_iter_),

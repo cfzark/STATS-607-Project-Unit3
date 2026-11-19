@@ -43,8 +43,9 @@
     ],
     "replicates": 200
   },
+  "workers": 4,
   "fits": 37800,
-  "simulation_seconds": 418.5566448000027,
+  "simulation_seconds": 183.5949063000735,
   "python": "3.11.7",
   "packages": {
     "numpy": "2.2.6",

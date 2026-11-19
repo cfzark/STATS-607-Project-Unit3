@@ -1,0 +1,18 @@
+{
+  "workers": 4,
+  "expected_trials": 37800,
+  "checked_trials": 37800,
+  "metadata_fit_count_matches": true,
+  "missing_trials": 0,
+  "extra_trials": 0,
+  "duplicate_rows": 0,
+  "nonfinite_rows": 0,
+  "convergence_warnings": 0,
+  "warning_conditions": [],
+  "iteration_limit_hits": 0,
+  "max_iterations": 60,
+  "max_abs_dual_gap": 2.381573683530231e-07,
+  "log_checked": true,
+  "log_issues": [],
+  "passed": true
+}
